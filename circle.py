@@ -8,8 +8,10 @@ import crc
 from threading import Thread, Event
 from queue import Queue
 
-RANGE = 6000
+RANGE = 3000
 THRESHOLD = 150
+PORT = "COM3"
+
 
 NUM_POINTS = 12
 
@@ -32,7 +34,7 @@ crc_calculator = crc.Calculator(crc.Configuration(8, 0x4d))
 def background_thread_func(stop:Event, queue:Queue):
     full_circle = []
 
-    with serial.Serial("COM5", 230400, timeout=1) as port:
+    with serial.Serial(PORT, 230400, timeout=1) as port:
         while not stop.is_set():
 
             read = port.read_until(start_bytes)
